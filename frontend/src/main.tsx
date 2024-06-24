@@ -5,6 +5,7 @@ import Home from "./routes/Home.tsx";
 import Signup from "./routes/Signup.tsx";
 import "./index.css";
 import { NextUIProvider } from "@nextui-org/react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <NextUIProvider>
-      <RouterProvider router={router} />
-    </NextUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextUIProvider>
+        <RouterProvider router={router} />
+      </NextUIProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

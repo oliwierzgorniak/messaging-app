@@ -5,6 +5,9 @@
 - https://socket.io/how-to/use-with-express-session
 - https://github.com/benawad/lireddit
 - https://reactrouter.com/en/main/start/tutorial
+- https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
+- https://bobbyhadz.com/blog/typescript-property-value-not-exist-type-eventtarget
+- https://refine.dev/blog/react-query-guide/#mutating-data
 
 ## Licenses
 
