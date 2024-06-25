@@ -1,5 +1,9 @@
 services:
   postgres:
     image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
     environment:
+      POSTGRES_DB: messaging-app
       POSTGRES_PASSWORD: example
