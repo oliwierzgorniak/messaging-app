@@ -7,3 +7,8 @@ services:
     environment:
       POSTGRES_DB: messaging-app
       POSTGRES_PASSWORD: example
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"

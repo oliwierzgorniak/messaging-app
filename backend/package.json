@@ -9,6 +9,7 @@
     "@eslint/js": "^9.5.0",
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
     "@types/node": "^20.14.8",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.5.10",
@@ -19,9 +20,13 @@
     "typescript-eslint": "^7.13.1"
   },
   "dependencies": {
+    "@prisma/client": "^5.15.1",
+    "connect-redis": "^7.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "redis": "^4.6.14",
     "socket.io": "^4.7.5",
     "sockjs": "^0.3.24",
     "uuid": "^10.0.0",

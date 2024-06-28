@@ -8,6 +8,9 @@
 - https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
 - https://bobbyhadz.com/blog/typescript-property-value-not-exist-type-eventtarget
 - https://refine.dev/blog/react-query-guide/#mutating-data
+- https://medium.com/swlh/session-management-in-nodejs-using-redis-as-session-store-64186112aa9
+- https://www.npmjs.com/package/connect-redis
+- https://pimylifeup.com/redis-docker/
 
 ## Licenses
 
