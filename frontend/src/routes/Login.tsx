@@ -1,10 +1,10 @@
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import signup from "../api/signup";
+import login from "../api/login";
 import { Link, useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Login = () => {
   const [isEmailMissing, setIsEmailMissing] = useState(false);
   const [isPasswordMissing, setIsPasswordMissing] = useState(false);
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ const Signup = () => {
 
   const mutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
-      signup(email, password),
+      login(email, password),
     onSuccess: (data: { result: "success" | "error"; content: string }) => {
       if (data.result === "success") {
         navigate("/");
@@ -86,13 +86,13 @@ const Signup = () => {
             </span>
           ) : null}
           <Button onClick={handleClick} color="primary" className="mt-6">
-            Sign up
+            Login
           </Button>
           <Link
-            to="/login"
+            to="/signup"
             className="mt-3 text-slate-600 underline self-center text-sm"
           >
-            login
+            sign up
           </Link>
         </form>
       </article>
@@ -100,4 +100,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
