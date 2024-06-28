@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [isEmailMissing, setIsEmailMissing] = useState(false);
   const [isPasswordMissing, setIsPasswordMissing] = useState(false);
-  const [email, setEmail] = useState("");
+  const [name, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<null | string>(null);
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ const Login = () => {
   }
 
   const mutation = useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) =>
-      login(email, password),
+    mutationFn: ({ name, password }: { name: string; password: string }) =>
+      login(name, password),
     onSuccess: (data: { result: "success" | "error"; content: string }) => {
       if (data.result === "success") {
         navigate("/");
@@ -38,12 +38,12 @@ const Login = () => {
   });
 
   function handleClick() {
-    if (email === "" || password === "") {
-      setMessage("Please provide an email and a password");
+    if (name === "" || password === "") {
+      setMessage("Please provide an name and a password");
       return;
     }
 
-    mutation.mutate({ email, password });
+    mutation.mutate({ name, password });
   }
 
   return (
@@ -59,12 +59,12 @@ const Login = () => {
               setEmail(input.value);
             }}
             onBlur={(e) => handleInputMissing(setIsEmailMissing, e)}
-            type="email"
+            type="name"
             label="Email"
-            name="email"
+            name="name"
             required
             isInvalid={isEmailMissing}
-            errorMessage={"Provide the email"}
+            errorMessage={"Provide the name"}
             className="mb-6"
           />
           <Input

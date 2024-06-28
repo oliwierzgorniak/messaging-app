@@ -3,7 +3,14 @@ import { redirect } from "react-router-dom";
 const Home = () => {
   redirect("/signup");
 
-  return <h1>Home</h1>;
+  return (
+    <div>
+      <section></section>
+      <main>
+        <section></section>
+      </main>
+    </div>
+  );
 };
 
 export default Home;

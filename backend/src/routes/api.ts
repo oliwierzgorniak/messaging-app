@@ -3,7 +3,7 @@ import { prisma } from "../index";
 const router = Router();
 
 router.post("/signup", async (req, res) => {
-  if (!req.body?.email || !req.body?.password) {
+  if (!req.body?.name || !req.body?.password) {
     res
       .status(400)
       .json({ result: "error", content: "Email or password missing" });
@@ -12,7 +12,7 @@ router.post("/signup", async (req, res) => {
 
   const user = await prisma.user.create({
     data: {
-      email: req.body.email,
+      name: req.body.name,
       password: req.body.password,
     },
   });
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  if (!req.body?.email || !req.body?.password) {
+  if (!req.body?.name || !req.body?.password) {
     res
       .status(400)
       .json({ result: "error", content: "Email or password missing" });
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
 
   const user = await prisma.user.findFirst({
     where: {
-      email: req.body.email,
+      name: req.body.name,
       password: req.body.password,
     },
   });
