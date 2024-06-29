@@ -1,11 +1,23 @@
-import { redirect } from "react-router-dom";
+import { useQuery } from "react-query";
+import logoSvg from "../assets/logo.svg";
+import getChats from "../api/getChats";
 
 const Home = () => {
-  redirect("/signup");
+  const { data, isLoading, isError } = useQuery("chats", getChats);
 
   return (
     <div>
-      <section></section>
+      <section>
+        <img src={logoSvg} alt="logo" />
+        <ul>
+          {data &&
+            data.content.map(({ id, name }: { id: number; name: string }) => (
+              <span>
+                {id} {name}
+              </span>
+            ))}
+        </ul>
+      </section>
       <main>
         <section></section>
       </main>

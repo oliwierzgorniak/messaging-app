@@ -16,17 +16,14 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   name String  @unique
-  password  String 
+  password  String
+  chats Int[]
 }
 
-model Chat {
-  id    Int     @id @default(autoincrement())
-  user1 Int
-  user2 Int 
-}
 
 model Message {
   id    Int     @id @default(autoincrement())
-  chatId Int
-  author Int
+  user1Id Int
+  user2Id Int
+  content String
 }
