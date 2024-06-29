@@ -1,26 +1,15 @@
-import { useQuery } from "react-query";
-import logoSvg from "../assets/logo.svg";
-import getChats from "../api/getChats";
+import { useState } from "react";
+import Chat from "../components/home/Chat";
+import Sidebar from "../components/home/Sidebar";
+import { IUser } from "../types";
 
 const Home = () => {
-  const { data, isLoading, isError } = useQuery("chats", getChats);
+  const [openedChat, setOpenedChat] = useState<null | IUser>(null);
 
   return (
-    <div>
-      <section>
-        <img src={logoSvg} alt="logo" />
-        <ul>
-          {data &&
-            data.content.map(({ id, name }: { id: number; name: string }) => (
-              <span>
-                {id} {name}
-              </span>
-            ))}
-        </ul>
-      </section>
-      <main>
-        <section></section>
-      </main>
+    <div className="flex">
+      <Sidebar setOpenedChat={setOpenedChat} />
+      <Chat openedChat={openedChat} />
     </div>
   );
 };
