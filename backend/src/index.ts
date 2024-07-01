@@ -8,10 +8,18 @@ import { PrismaClient } from "@prisma/client";
 import session from "express-session";
 import { createClient } from "redis";
 import RedisStore from "connect-redis";
+import handleMessages from "./io/handleMessages";
 
 const app = express();
+app.set("trust proxy", 1);
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:5173"],
+  },
+});
 const prisma = new PrismaClient();
 
 const redisClient = createClient();
@@ -23,8 +31,6 @@ const redisStore = new RedisStore({
   disableTouch: true,
 });
 
-app.set("trust proxy", 1);
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 // Initialize session storage.
 app.use(
   session({
@@ -44,6 +50,9 @@ app.use(
 
 app.use(express.json());
 app.use("/api", apiRouter);
+
+// io
+handleMessages();
 
 server.listen(process.env.PORT, () => {
   console.log(`server running at http://localhost:${process.env.PORT}`);
