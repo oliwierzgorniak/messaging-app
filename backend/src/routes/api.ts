@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { prisma } from "../index";
-import { RequestWithSession } from "../types";
 const router = Router();
 
 router.post("/signup", async (req, res) => {
