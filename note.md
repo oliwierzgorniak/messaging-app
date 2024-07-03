@@ -11,6 +11,7 @@
 - https://medium.com/swlh/session-management-in-nodejs-using-redis-as-session-store-64186112aa9
 - https://www.npmjs.com/package/connect-redis
 - https://pimylifeup.com/redis-docker/
+- https://bobbyhadz.com/blog/react-scroll-to-bottom
 
 ## Licenses
 

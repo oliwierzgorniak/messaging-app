@@ -92,4 +92,34 @@ router.get("/chats", async (req, res) => {
   });
 });
 
+router.get("/messages", async (req, res) => {
+  // @ts-ignore
+  if (!req.query.contact) {
+    res.json({
+      result: "error",
+      content: "no contact param",
+    });
+    return;
+  }
+
+  // @ts-ignore
+  if (!req.session.userId) {
+    res.json({
+      result: "error",
+      content: "no userId in session",
+    });
+    return;
+  }
+  const messages = await prisma.message.findMany({
+    where: {
+      sender: {
+        // @ts-ignore
+        in: [req.session.userId, +req.query.contact],
+      },
+    },
+  });
+
+  res.json({ result: "success", content: messages });
+});
+
 export default router;

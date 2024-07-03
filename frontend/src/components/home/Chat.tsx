@@ -1,58 +1,72 @@
-import { useQuery } from "react-query";
-import getMessages from "../../api/getMessages";
-import { IUser } from "../../types";
 import { Button, Input } from "@nextui-org/react";
 import socket from "../../socket";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import fetchMessages from "./chat/fetchMessages";
+import { IMessage, IUser } from "../../types";
+import Message from "./Message";
 
-function sendMessage(message: string, recipient: number) {
-  socket.emit("message", {
-    content: message,
-    recipient: recipient,
-  });
-}
+const Chat = ({ openedChat }: { openedChat: IUser }) => {
+  function sendMessage() {
+    setMessages([...messages, { content: inputValue, isSender: true }]);
+    socket.emit("message", {
+      content: inputValue,
+      recipient: openedChat.id,
+    });
+    setInputValue("");
+  }
 
-const Chat = ({ openedChat }: { openedChat: IUser | null }) => {
-  // const { data } = useQuery("messages", () => getMessages(openedChat.id));
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
+
+  const bottomDivRef = useRef<null | HTMLDivElement>(null);
+  useEffect(() => {
+    bottomDivRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    fetchMessages(openedChat, setMessages);
+  }, [openedChat]);
 
   socket.on("message", (message: { sender: number; content: string }) => {
-    setMessages([...messages, message.content]);
+    setMessages([
+      ...messages,
+      { content: message.content, isSender: message.sender !== openedChat.id },
+    ]);
   });
 
   return (
-    <>
-      {openedChat ? (
-        <main className="w-full">
-          <section className="h-lvh flex flex-col">
-            <div className="border-b-2 py-2 px-3">{openedChat.name}</div>
-            <div className="h-full">
-              <ul>
-                {messages.map((message, i) => (
-                  <li key={`message-${i}`}>{message}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex gap-2 px-2 py-4 border-t-2">
-              <Input
-                type="text"
-                onInput={(e) => {
-                  const $input = e.target as HTMLInputElement;
-                  setInputValue($input.value);
-                }}
+    <main className="w-full">
+      <section className="h-lvh flex flex-col">
+        <div className="border-b-2 py-3 px-4 font-medium text-md">
+          {openedChat.name}
+        </div>
+        <div className="h-full overflow-y-scroll">
+          <ul className="flex flex-col py-2">
+            {messages.map((message, i) => (
+              <Message
+                key={`message-${i}`}
+                content={message.content}
+                isSender={message.isSender}
               />
-              <Button
-                color="primary"
-                onClick={() => sendMessage(inputValue, openedChat.id)}
-              >
-                Send
-              </Button>
-            </div>
-          </section>
-        </main>
-      ) : null}
-    </>
+            ))}
+          </ul>
+          <div ref={bottomDivRef}></div>
+        </div>
+        <div className="flex gap-2 px-2 py-4 border-t-2">
+          <Input
+            type="text"
+            value={inputValue}
+            onInput={(e) => {
+              const $input = e.target as HTMLInputElement;
+              setInputValue($input.value);
+            }}
+          />
+          <Button color="primary" onClick={sendMessage}>
+            Send
+          </Button>
+        </div>
+      </section>
+    </main>
   );
 };
 

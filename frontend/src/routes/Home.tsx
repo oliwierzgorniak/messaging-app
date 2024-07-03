@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="flex">
       <Sidebar setOpenedChat={setOpenedChat} />
-      <Chat openedChat={openedChat} />
+      {openedChat ? <Chat openedChat={openedChat} /> : null}
     </div>
   );
 };
