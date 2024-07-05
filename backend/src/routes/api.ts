@@ -165,7 +165,6 @@ router.get("/name", async (req, res) => {
       result: "error",
       content: "no user found",
     });
-
     return;
   }
 
@@ -184,12 +183,10 @@ router.get("/users", async (req, res) => {
       result: "error",
       content: "no user id on session",
     });
-
     return;
   }
 
   let users;
-
   if (req.query.string && req.query.string !== "") {
     users = await prisma.user.findMany({
       where: {
@@ -212,7 +209,6 @@ router.get("/users", async (req, res) => {
       result: "error",
       content: "no user found",
     });
-
     return;
   }
 
@@ -261,7 +257,6 @@ router.post("/add-chat", async (req, res) => {
       result: "error",
       content: "no user found with provided user id",
     });
-
     return;
   }
 

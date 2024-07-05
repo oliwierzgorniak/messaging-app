@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
-import { IUserSidebar } from "../types";
+import { IChatsContext, IUserSidebar } from "../types";
 
 const ChatsContext = createContext({
   chats: [],
   setChats: () => {},
-} as { chats: IUserSidebar[]; setChats: React.Dispatch<React.SetStateAction<IUserSidebar[]>> });
+} as IChatsContext);
 
 export const ChatsProvider = ({ children }: { children: JSX.Element }) => {
   const [chats, setChats] = useState<IUserSidebar[]>([]);

@@ -1,8 +1,8 @@
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import signup from "../api/signup";
 import { Link, useNavigate } from "react-router-dom";
+import signup from "../api/signup";
 
 const Signup = () => {
   const [isEmailMissing, setIsEmailMissing] = useState(false);

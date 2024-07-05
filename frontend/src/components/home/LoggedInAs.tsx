@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
-import getName from "../../api/getName";
 import { Button } from "@nextui-org/react";
 import { Link } from "react-router-dom";
+import getName from "../../api/getName";
 
 const LoggedInAs = () => {
   const { data } = useQuery("name", getName);

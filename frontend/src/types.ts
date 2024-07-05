@@ -27,3 +27,13 @@ export interface IServerChatsResponse {
   result: "success" | "error";
   content: string | IUserSidebar[];
 }
+
+export interface IServerAddChatsResponse {
+  result: "success" | "error";
+  content: string;
+}
+
+export interface IChatsContext {
+  chats: IUserSidebar[];
+  setChats: React.Dispatch<React.SetStateAction<IUserSidebar[]>>;
+}

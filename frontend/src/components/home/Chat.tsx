@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
-import socket from "../../socket";
 import { useEffect, useRef, useState } from "react";
+import socket from "../../socket";
 import fetchMessages from "./chat/fetchMessages";
 import { IMessage, IUserSidebar } from "../../types";
 import Message from "./Message";

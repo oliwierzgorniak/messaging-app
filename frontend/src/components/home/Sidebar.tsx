@@ -1,14 +1,10 @@
 import { useQuery } from "react-query";
+import { useContext, useState } from "react";
+import { Button } from "@nextui-org/react";
 import logoSvg from "../../assets/logo.svg";
 import getChats from "../../api/getChats";
-import {
-  IServerChatsResponse,
-  IServerResponse,
-  IUserSidebar,
-} from "../../types";
+import { IServerChatsResponse, IUserSidebar } from "../../types";
 import LoggedInAs from "./LoggedInAs";
-import { Button } from "@nextui-org/react";
-import { useContext, useState } from "react";
 import Search from "./Search";
 import ChatsContext from "../../context/ChatsContext";
 

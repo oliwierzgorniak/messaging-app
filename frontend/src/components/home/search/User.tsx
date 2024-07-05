@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/react";
 import { useMutation } from "react-query";
 import { useContext } from "react";
-import { IUser } from "../../../types";
+import { IServerAddChatsResponse, IUser } from "../../../types";
 import addChat from "../../../api/addChat";
 import ChatsContext from "../../../context/ChatsContext";
 
@@ -10,10 +10,7 @@ const User = ({ user }: { user: IUser }) => {
 
   const mutation = useMutation({
     mutationFn: () => addChat(user.id),
-    onSuccess: async (data: {
-      result: "success" | "error";
-      content: string;
-    }) => {
+    onSuccess: async (data: IServerAddChatsResponse) => {
       if (data.result === "success") {
         user.isAdded = true;
         setChats([...chats, { id: user.id, name: user.name }]);

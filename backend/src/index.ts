@@ -3,12 +3,12 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 import "dotenv/config";
 import cors from "cors";
-import apiRouter from "./routes/api";
 import { PrismaClient } from "@prisma/client";
 import session from "express-session";
 import { createClient } from "redis";
 import RedisStore from "connect-redis";
 import handleMessages from "./io/handleMessages";
+import apiRouter from "./routes/api";
 
 const app = express();
 app.set("trust proxy", 1);
