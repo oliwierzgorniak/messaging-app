@@ -113,10 +113,30 @@ router.get("/messages", async (req, res) => {
 
   const messages = await prisma.message.findMany({
     where: {
-      sender: {
-        // @ts-ignore
-        in: [req.session.userId, +req.query.contact],
-      },
+      OR: [
+        {
+          AND: [
+            {
+              // @ts-ignore
+              sender: req.session.userId,
+            },
+            {
+              recipient: +req.query.contact,
+            },
+          ],
+        },
+        {
+          AND: [
+            {
+              // @ts-ignore
+              recipient: req.session.userId,
+            },
+            {
+              sender: +req.query.contact,
+            },
+          ],
+        },
+      ],
     },
   });
 

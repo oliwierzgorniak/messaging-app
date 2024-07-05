@@ -28,6 +28,7 @@ export default function handleMessages() {
 
         // saving a message to db
         if (senderId) {
+          console.log(senderId);
           await prisma.message.create({
             data: {
               sender: senderId,

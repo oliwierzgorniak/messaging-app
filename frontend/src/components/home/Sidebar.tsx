@@ -27,7 +27,7 @@ const Sidebar = ({
       >
         Add chat
       </Button>
-      {isModalOpen ? <Search /> : null}
+      {isModalOpen ? <Search setIsModalOpen={setIsModalOpen} /> : null}
       <ul className="self-start">
         {data &&
           data.content.map(({ id, name }: IUserSidebar) => (
