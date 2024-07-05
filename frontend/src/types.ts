@@ -16,3 +16,9 @@ export interface IMessage {
 }
 
 export type SetMessageType = React.Dispatch<React.SetStateAction<IMessage[]>>;
+
+export interface IUser {
+  id: number;
+  name: string;
+  isAdded: boolean;
+}

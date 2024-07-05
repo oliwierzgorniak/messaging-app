@@ -155,4 +155,100 @@ router.get("/name", async (req, res) => {
   });
 });
 
+router.get("/users", async (req, res) => {
+  // @ts-ignore
+  const userId: number | undefined = req.session.userId;
+
+  if (!userId) {
+    res.status(400).json({
+      result: "error",
+      content: "no user id on session",
+    });
+
+    return;
+  }
+
+  let users;
+
+  if (req.query.string && req.query.string !== "") {
+    users = await prisma.user.findMany({
+      where: {
+        name: {
+          startsWith: req.query.string.toString().toLocaleLowerCase(),
+        },
+      },
+      take: 50,
+    });
+  } else {
+    users = await prisma.user.findMany({
+      take: 50,
+    });
+  }
+
+  const usersWithoutMe = users.filter((user) => user.id !== userId);
+  const usersFormatted = usersWithoutMe.map((user) => {
+    return {
+      id: user.id,
+      name: user.name,
+      isAdded: user.chats.includes(userId),
+    };
+  });
+
+  res.json({
+    result: "success",
+    content: usersFormatted,
+  });
+});
+
+router.post("/add-chat", async (req, res) => {
+  if (!req.body.userId) {
+    res.status(400).json({
+      result: "error",
+      content: "no userId in body",
+    });
+    return;
+  }
+
+  // @ts-ignore
+  if (!req.session.userId) {
+    res.status(400).json({
+      result: "error",
+      content: "no userId in session",
+    });
+    return;
+  }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      // @ts-ignore
+      id: req.session.userId,
+    },
+  });
+
+  if (!user) {
+    res.status(400).json({
+      result: "error",
+      content: "no user found with provided user id",
+    });
+
+    return;
+  }
+
+  user.chats.push(req.body.userId);
+  let chats: number[] = [];
+  const uniqueChats = user.chats.filter((u) => !chats.includes(u));
+
+  await prisma.user.update({
+    where: {
+      // @ts-ignore
+      id: req.session.userId,
+    },
+    data: {
+      chats: uniqueChats,
+    },
+  });
+
+  res.json({ result: "success", content: "chat added" });
+});
+
 export default router;
