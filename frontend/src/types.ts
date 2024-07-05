@@ -22,3 +22,8 @@ export interface IUser {
   name: string;
   isAdded: boolean;
 }
+
+export interface IServerChatsResponse {
+  result: "success" | "error";
+  content: string | IUserSidebar[];
+}

@@ -1,18 +1,30 @@
 import { useQuery } from "react-query";
 import logoSvg from "../../assets/logo.svg";
 import getChats from "../../api/getChats";
-import { IUserSidebar } from "../../types";
+import {
+  IServerChatsResponse,
+  IServerResponse,
+  IUserSidebar,
+} from "../../types";
 import LoggedInAs from "./LoggedInAs";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Search from "./Search";
+import ChatsContext from "../../context/ChatsContext";
 
 const Sidebar = ({
   setOpenedChat,
 }: {
   setOpenedChat: React.Dispatch<React.SetStateAction<IUserSidebar | null>>;
 }) => {
-  const { data } = useQuery("chats", getChats);
+  const { chats, setChats } = useContext(ChatsContext);
+  useQuery("chats", getChats, {
+    onSuccess: (data: IServerChatsResponse) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (data.result === "success") setChats(data.content);
+    },
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -29,17 +41,16 @@ const Sidebar = ({
       </Button>
       {isModalOpen ? <Search setIsModalOpen={setIsModalOpen} /> : null}
       <ul className="self-start">
-        {data &&
-          data.content.map(({ id, name }: IUserSidebar) => (
-            <li key={id}>
-              <Button
-                onClick={() => setOpenedChat({ id, name })}
-                className="w-32 bg-slate-100 rounded-lg p-2 mb-3"
-              >
-                {name}
-              </Button>
-            </li>
-          ))}
+        {chats.map(({ id, name }: IUserSidebar) => (
+          <li key={id}>
+            <Button
+              onClick={() => setOpenedChat({ id, name })}
+              className="w-32 bg-slate-100 rounded-lg p-2 mb-3"
+            >
+              {name}
+            </Button>
+          </li>
+        ))}
       </ul>
       <LoggedInAs />
     </section>

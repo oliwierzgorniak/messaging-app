@@ -1,11 +1,12 @@
 import { Button } from "@nextui-org/react";
+import { useMutation } from "react-query";
+import { useContext } from "react";
 import { IUser } from "../../../types";
-import { useMutation, useQueryClient } from "react-query";
-
 import addChat from "../../../api/addChat";
+import ChatsContext from "../../../context/ChatsContext";
 
 const User = ({ user }: { user: IUser }) => {
-  const queryClient = useQueryClient();
+  const { setChats, chats } = useContext(ChatsContext);
 
   const mutation = useMutation({
     mutationFn: () => addChat(user.id),
@@ -15,7 +16,7 @@ const User = ({ user }: { user: IUser }) => {
     }) => {
       if (data.result === "success") {
         user.isAdded = true;
-        await queryClient.refetchQueries(["chats"]);
+        setChats([...chats, { id: user.id, name: user.name }]);
       }
     },
   });

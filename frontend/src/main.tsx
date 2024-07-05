@@ -7,6 +7,7 @@ import Login from "./routes/Login.tsx";
 import "./index.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ChatsProvider } from "./context/ChatsContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <NextUIProvider>
-        <RouterProvider router={router} />
+        <ChatsProvider>
+          <RouterProvider router={router} />
+        </ChatsProvider>
       </NextUIProvider>
     </QueryClientProvider>
   </React.StrictMode>

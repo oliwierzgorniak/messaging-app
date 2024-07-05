@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Chat from "../components/home/Chat";
 import Sidebar from "../components/home/Sidebar";
-import { IUser, IUserSidebar } from "../types";
+import { IUserSidebar } from "../types";
 
 const Home = () => {
   const [openedChat, setOpenedChat] = useState<null | IUserSidebar>(null);
