@@ -1,8 +1,8 @@
 import getMessages from "../../../api/getMessages";
-import { IMessageRes, IUser, SetMessageType } from "../../../types";
+import { IMessageRes, IUserSidebar, SetMessageType } from "../../../types";
 
 export default async function fetchMessages(
-  openedChat: IUser,
+  openedChat: IUserSidebar,
   setMessages: SetMessageType
 ) {
   const res: { result: string; content: string | IMessageRes[] } =

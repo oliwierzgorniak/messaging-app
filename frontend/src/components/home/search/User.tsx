@@ -1,13 +1,22 @@
 import { Button } from "@nextui-org/react";
 import { IUser } from "../../../types";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+
 import addChat from "../../../api/addChat";
 
 const User = ({ user }: { user: IUser }) => {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: () => addChat(user.id),
-    onSuccess: () => {
-      user.isAdded = true;
+    onSuccess: async (data: {
+      result: "success" | "error";
+      content: string;
+    }) => {
+      if (data.result === "success") {
+        user.isAdded = true;
+        await queryClient.refetchQueries(["chats"]);
+      }
     },
   });
 
@@ -20,7 +29,9 @@ const User = ({ user }: { user: IUser }) => {
         size="sm"
         className={user.isAdded ? " bg-gray-400" : ""}
         disabled={user.isAdded}
-        onClick={() => mutation.mutate()}
+        onClick={() => {
+          if (!user.isAdded) mutation.mutate();
+        }}
       >
         {user.isAdded ? "Added" : "Add"}
       </Button>

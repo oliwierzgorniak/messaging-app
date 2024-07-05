@@ -1,12 +1,10 @@
 import { Input } from "@nextui-org/react";
 import { useQuery } from "react-query";
 import getUsers from "../../api/getUsers";
-import { useState } from "react";
 import User from "./search/User";
 
 const Search = () => {
   let inputValue = "";
-  // const [inputValue, setInputValue] = useState("");
   const { data, refetch } = useQuery("users", () => getUsers(inputValue));
 
   return (

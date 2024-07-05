@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IUserSidebar {
   id: number;
   name: string;
 }

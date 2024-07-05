@@ -2,10 +2,10 @@ import { Button, Input } from "@nextui-org/react";
 import socket from "../../socket";
 import { useEffect, useRef, useState } from "react";
 import fetchMessages from "./chat/fetchMessages";
-import { IMessage, IUser } from "../../types";
+import { IMessage, IUserSidebar } from "../../types";
 import Message from "./Message";
 
-const Chat = ({ openedChat }: { openedChat: IUser }) => {
+const Chat = ({ openedChat }: { openedChat: IUserSidebar }) => {
   function sendMessage() {
     setMessages([...messages, { content: inputValue, isSender: true }]);
     socket.emit("message", {

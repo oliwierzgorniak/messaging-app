@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Chat from "../components/home/Chat";
 import Sidebar from "../components/home/Sidebar";
-import { IUser } from "../types";
+import { IUser, IUserSidebar } from "../types";
 
 const Home = () => {
-  const [openedChat, setOpenedChat] = useState<null | IUser>(null);
+  const [openedChat, setOpenedChat] = useState<null | IUserSidebar>(null);
 
   return (
     <div className="flex">

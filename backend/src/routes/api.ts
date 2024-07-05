@@ -185,12 +185,23 @@ router.get("/users", async (req, res) => {
     });
   }
 
+  // @ts-ignore
+  const me = await prisma.user.findFirst({ where: { id: userId } });
+  if (!me) {
+    res.status(400).json({
+      result: "error",
+      content: "no user found",
+    });
+
+    return;
+  }
+
   const usersWithoutMe = users.filter((user) => user.id !== userId);
   const usersFormatted = usersWithoutMe.map((user) => {
     return {
       id: user.id,
       name: user.name,
-      isAdded: user.chats.includes(userId),
+      isAdded: me.chats.includes(user.id),
     };
   });
 
@@ -234,9 +245,7 @@ router.post("/add-chat", async (req, res) => {
     return;
   }
 
-  user.chats.push(req.body.userId);
-  let chats: number[] = [];
-  const uniqueChats = user.chats.filter((u) => !chats.includes(u));
+  if (!user.chats.includes(req.body.userId)) user.chats.push(req.body.userId);
 
   await prisma.user.update({
     where: {
@@ -244,7 +253,7 @@ router.post("/add-chat", async (req, res) => {
       id: req.session.userId,
     },
     data: {
-      chats: uniqueChats,
+      chats: user.chats,
     },
   });
 
